@@ -1,0 +1,8 @@
+FROM alpine/java:17
+
+COPY target/calculator.jar .
+
+
+EXPOSE 8080
+
+ENTRYPOINT [ "java", "-jar", "calculator.jar" ]
