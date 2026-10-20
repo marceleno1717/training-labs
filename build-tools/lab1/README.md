@@ -3,7 +3,6 @@
 ```
 git clone https://github.com/Ibrahim-Adel15/CalculatorMavenApp.git
 ```
-
 ### 2) run unit test
 ```
 mvn test
