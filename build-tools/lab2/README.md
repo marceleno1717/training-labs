@@ -1,4 +1,4 @@
-# Lab 1
+# Lab 2
 ### 1) Clone the repo
 ```
 git clone https://github.com/Ibrahim-Adel15/CalculatorGradleApp.git
