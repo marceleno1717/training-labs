@@ -1,0 +1,38 @@
+name: Lab8
+
+services:
+  app:
+    image: myapp:latest
+    build: iVolveApp
+    ports:
+      - 3000:3000
+    environment:
+      - DB_HOST=mysql
+      - DB_USER=admin
+      - DB_PASSWORD=admin123
+    volumes:
+      - app_logs:/app/logs
+    networks:
+      - ivolve-net
+
+  mysql:
+    image: mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin123
+      - MYSQL_DATABASE=ivolve
+      - MYSQL_ROOT_PASSWORD=123
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - ivolve-net
+
+networks:
+  ivolve-net:
+
+volumes:
+  app_logs:
+
+  db_data:
