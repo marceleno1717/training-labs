@@ -1,0 +1,25 @@
+services:
+  ssh-agent:
+    image: jenkins/ssh-agent:latest-jdk21
+    container_name: jenkins-agent
+    environment:
+      JENKINS_AGENT_SSH_PUBKEY: ${JENKINS_AGENT_SSH_PUBKEY}
+      PATH: /opt/node/bin:/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    group_add:
+      - "1001"
+    volumes:
+      - /home/marceleno/.nvm/versions/node/v24.19.0:/opt/node:ro
+      - /home/marceleno/node-wrapper:/usr/local/bin/node:ro
+      - /home/marceleno/npm-wrapper:/usr/local/bin/npm:ro
+      - /home/marceleno/npx-wrapper:/usr/local/bin/npx:ro
+      - /snap/kubectl/current/kubectl:/usr/local/bin/kubectl:ro
+      - /home/marceleno/.local/bin/trivy:/usr/local/bin/trivy:ro
+      - /usr/bin/docker:/usr/local/bin/docker:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /home/marceleno/kubeconfig-agent:/home/jenkins/.kube/config:ro
+    networks:
+      - minikube
+
+networks:
+  minikube:
+    external: true

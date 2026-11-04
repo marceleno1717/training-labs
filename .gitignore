@@ -1,2 +1,3 @@
 tasks/
 *.tar*
+jenkins/lab22/id_rsa
