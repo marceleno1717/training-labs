@@ -103,18 +103,19 @@ pipeline {
    - Kind: `Username with password`
    - ID: `docker`
 2. **Kubernetes Access**:
-   - Kubeconfig / cluster context configured so Jenkins controller or agent can execute `kubectl apply` and `kubectl rollout status`.
+   - Kubeconfig / cluster context configured on the Jenkins controller allowing `kubectl apply` and `kubectl rollout status`.
 3. **Build Dependencies**:
    - Node.js & npm installed in PATH (via NVM symlinks).
-   - Trivy scanner installed (`trivy 0.76.1`).
+   - Trivy vulnerability scanner installed (`trivy 0.76.1`).
 
 ---
 
 ### 4) Pipeline Execution Output
-Execution logs from build #6 demonstrating successful completion of all stages:
+Execution logs from build #7 demonstrating successful completion of all stages with image `marceleno17/ivolveapp:7`:
 
 ```text
-Started by user admin
+Started ivolveapp #7
+Started from command line by admin
 Obtained Jenkinsfile from git https://github.com/marceleno1717/ivolveapp
 [Pipeline] Start of Pipeline
 [Pipeline] node
@@ -126,8 +127,8 @@ Running on Jenkins in /var/jenkins_home/workspace/ivolveapp
 using credential github
 Cloning the remote Git repository
 Cloning repository https://github.com/marceleno1717/ivolveapp
-Checking out Revision b078d62d09ae7d72e6b26bde11555747925e6ba7 (refs/remotes/origin/main)
-Commit message: "jen"
+Checking out Revision 3055473351dd1ea743b6dab6c3ddfd3e209cde3c (refs/remotes/origin/main)
+Commit message: "Update default image name in deployment.yaml to marceleno17/ivolveapp"
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] withEnv
@@ -152,10 +153,10 @@ found 0 vulnerabilities
 [Pipeline] stage
 [Pipeline] { (2. Build Docker Image)
 [Pipeline] echo
-Building Docker image marceleno17/ivolveapp:6...
+Building Docker image marceleno17/ivolveapp:7...
 [Pipeline] sh
-+ docker build -t marceleno17/ivolveapp:6 .
-Sending build context to Docker daemon  7.944MB
++ docker build -t marceleno17/ivolveapp:7 .
+Sending build context to Docker daemon   7.95MB
 Step 1/7 : FROM node:18-alpine
 Step 2/7 : WORKDIR /app
 Step 3/7 : COPY package.json ./
@@ -163,8 +164,8 @@ Step 4/7 : RUN npm install
 Step 5/7 : COPY . .
 Step 6/7 : EXPOSE 3000
 Step 7/7 : CMD ["node", "server.js"]
-Successfully built fe653b006c33
-Successfully tagged marceleno17/ivolveapp:6
+Successfully built ab8e63239986
+Successfully tagged marceleno17/ivolveapp:7
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] stage
@@ -172,20 +173,20 @@ Successfully tagged marceleno17/ivolveapp:6
 [Pipeline] echo
 Scanning Docker image with Trivy...
 [Pipeline] sh
-+ trivy image --severity HIGH,CRITICAL --exit-code 0 marceleno17/ivolveapp:6
-2026-11-04T10:39:10Z	INFO	[vuln] Vulnerability scanning is enabled
-2026-11-04T10:39:10Z	INFO	[secret] Secret scanning is enabled
-2026-11-04T10:39:16Z	INFO	Detected OS	family="alpine" version="3.21.3"
-2026-11-04T10:39:16Z	INFO	[alpine] Detecting vulnerabilities...	os_version="3.21" repository="3.21" pkg_num=17
-2026-11-04T10:39:16Z	INFO	Number of language-specific files	num=1
-2026-11-04T10:39:16Z	INFO	[node-pkg] Detecting vulnerabilities...
++ trivy image --severity HIGH,CRITICAL --exit-code 0 marceleno17/ivolveapp:7
+2026-11-04T10:56:20Z	INFO	[vuln] Vulnerability scanning is enabled
+2026-11-04T10:56:20Z	INFO	[secret] Secret scanning is enabled
+2026-11-04T10:56:32Z	INFO	Detected OS	family="alpine" version="3.21.3"
+2026-11-04T10:56:32Z	INFO	[alpine] Detecting vulnerabilities...	os_version="3.21" repository="3.21" pkg_num=17
+2026-11-04T10:56:32Z	INFO	Number of language-specific files	num=1
+2026-11-04T10:56:32Z	INFO	[node-pkg] Detecting vulnerabilities...
 
 Report Summary
 
 ┌───────────────────────────────────────────────┬──────────┬─────────────────┬─────────┐
 │                    Target                     │   Type   │ Vulnerabilities │ Secrets │
 ├───────────────────────────────────────────────┼──────────┼─────────────────┼─────────┤
-│ marceleno17/ivolveapp:6 (alpine 3.21.3)       │  alpine  │       21        │    -    │
+│ marceleno17/ivolveapp:7 (alpine 3.21.3)       │  alpine  │       21        │    -    │
 ├───────────────────────────────────────────────┼──────────┼─────────────────┼─────────┤
 │ app/node_modules/@types/node/package.json     │ node-pkg │        0        │    -    │
 └───────────────────────────────────────────────┴──────────┴─────────────────┴─────────┘
@@ -200,14 +201,10 @@ Pushing Docker image to DockerHub...
 [Pipeline] sh
 + echo ****
 + docker login -u marceleno17 --password-stdin
-WARNING! Your password will be stored unencrypted in /var/jenkins_home/.docker/config.json.
-Configure a credential helper to remove this warning. See
-https://docs.docker.com/engine/reference/commandline/login/#credential-stores
-
 Login Succeeded
-+ docker push marceleno17/ivolveapp:6
++ docker push marceleno17/ivolveapp:7
 The push refers to repository [docker.io/marceleno17/ivolveapp]
-6: digest: sha256:fe653b006c333718b11ab8f323f3c8fa24d33d19ca8acc10c592ecba2f2eab78 size: 2057
+7: digest: sha256:ab8e632399864caa3531881eb1d3ba9764293e1d0d8d4b624e9f78afd5bd45bd size: 2057
 [Pipeline] }
 [Pipeline] // withCredentials
 [Pipeline] }
@@ -217,18 +214,17 @@ The push refers to repository [docker.io/marceleno17/ivolveapp]
 [Pipeline] echo
 Cleaning up local Docker images...
 [Pipeline] sh
-+ docker rmi marceleno17/ivolveapp:6
-Untagged: marceleno17/ivolveapp:6
-Deleted: sha256:fe653b006c333718b11ab8f323f3c8fa24d33d19ca8acc10c592ecba2f2eab78
-Deleted: sha256:4065ba0f21f477d05908294787c57f23f385f491fa4ccb64adf80d8a0ea0bb4c
++ docker rmi marceleno17/ivolveapp:7
+Untagged: marceleno17/ivolveapp:7
+Deleted: sha256:ab8e632399864caa3531881eb1d3ba9764293e1d0d8d4b624e9f78afd5bd45bd
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] stage
 [Pipeline] { (6. Update Image in Deployment File)
 [Pipeline] echo
-Updating deployment.yaml with image tag 6...
+Updating deployment.yaml with image tag 7...
 [Pipeline] sh
-+ sed -i s|image: marceleno17/ivolveapp:.*|image: marceleno17/ivolveapp:6| deployment.yaml
++ sed -i s|image: marceleno17/ivolveapp:.*|image: marceleno17/ivolveapp:7| deployment.yaml
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] stage
@@ -240,8 +236,8 @@ Applying manifests to Kubernetes cluster...
 deployment.apps/ivolveapp configured
 [Pipeline] sh
 + kubectl rollout status deployment/ivolveapp -n ivolve --timeout=120s
-Waiting for deployment "ivolveapp" rollout to finish: 0 out of 2 new replicas have been updated...
 Waiting for deployment "ivolveapp" rollout to finish: 1 out of 2 new replicas have been updated...
+Waiting for deployment "ivolveapp" rollout to finish: 1 old replicas are pending termination...
 deployment "ivolveapp" successfully rolled out
 [Pipeline] }
 [Pipeline] // stage
@@ -253,7 +249,7 @@ Pipeline run completed.
 + docker logout
 Removing login credentials for https://index.docker.io/v1/
 [Pipeline] echo
-Pipeline succeeded! Application deployed with image marceleno17/ivolveapp:6.
+Pipeline succeeded! Application deployed with image marceleno17/ivolveapp:7.
 [Pipeline] }
 [Pipeline] // stage
 [Pipeline] }
@@ -264,12 +260,13 @@ Pipeline succeeded! Application deployed with image marceleno17/ivolveapp:6.
 [Pipeline] // node
 [Pipeline] End of Pipeline
 Finished: SUCCESS
+Completed ivolveapp #7 : SUCCESS
 ```
 
 ---
 
 ### 5) Kubernetes Cluster Verification
-Verify the pods and rollout in the `ivolve` namespace:
+Verify that the pods in namespace `ivolve` are now running image `marceleno17/ivolveapp:7`:
 
 ```bash
 kubectl get pods,svc,deploy -n ivolve -o wide
@@ -277,15 +274,15 @@ kubectl get pods,svc,deploy -n ivolve -o wide
 
 ```text
 NAME                             READY   STATUS    RESTARTS       AGE     IP               NODE           NOMINATED NODE   READINESS GATES
-pod/ivolveapp-685f6864d8-25xt2   1/1     Running   0              5m21s   10.244.205.204   minikube-m02   <none>           <none>
-pod/ivolveapp-685f6864d8-z5ph2   1/1     Running   0              5m13s   10.244.205.205   minikube-m02   <none>           <none>
-pod/ivolvedb-0                   1/1     Running   2 (34h ago)    2d14h   10.244.205.201   minikube-m02   <none>           <none>
-pod/network                      1/1     Running   2 (125m ago)   2d14h   10.244.120.111   minikube       <none>           <none>
+pod/ivolveapp-7d8788bf67-667zn   1/1     Running   0              48s     10.244.205.207   minikube-m02   <none>           <none>
+pod/ivolveapp-7d8788bf67-gw24c   1/1     Running   0              64s     10.244.205.206   minikube-m02   <none>           <none>
+pod/ivolvedb-0                   1/1     Running   2 (35h ago)    2d15h   10.244.205.201   minikube-m02   <none>           <none>
+pod/network                      1/1     Running   2 (138m ago)   2d15h   10.244.120.111   minikube       <none>           <none>
 
 NAME                   TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE     SELECTOR
-service/ivolvaappsvc   ClusterIP   10.98.243.216   <none>        3000/TCP   3d16h   app=ivolveapp
+service/ivolvaappsvc   ClusterIP   10.98.243.216   <none>        3000/TCP   3d17h   app=ivolveapp
 service/ivolvedbsvc    ClusterIP   None            <none>        3306/TCP   6d14h   app=ivolvedb
 
-NAME                        READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES                        SELECTOR
-deployment.apps/ivolveapp   2/2     2            2           3d16h   app          marceleno17/lab8-app:latest   app=ivolveapp
+NAME                        READY   UP-TO-DATE   AVAILABLE   AGE     CONTAINERS   IMAGES                    SELECTOR
+deployment.apps/ivolveapp   2/2     2            2           3d17h   app          marceleno17/ivolveapp:7   app=ivolveapp
 ```
