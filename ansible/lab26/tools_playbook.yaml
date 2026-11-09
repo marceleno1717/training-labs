@@ -1,0 +1,8 @@
+---
+- name: Install Docker, Kubectl and Jenkins
+  hosts: slaves
+  become: true
+  roles:
+    - docker
+    - kubectl
+    - jenkins
