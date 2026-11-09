@@ -224,11 +224,6 @@ PLAY RECAP *********************************************************************
 ---
 
 ### 6) Verification on Managed Node (`ansible-slave`)
-Connect directly to the managed node (`52.47.108.81`) via SSH using `k3s.pem`:
-
-```bash
-ssh -i ~/.ssh/k3s.pem ubuntu@52.47.108.81
-```
 
 #### 1. Verify Installed Tool Versions
 ```bash

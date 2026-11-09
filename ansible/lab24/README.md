@@ -16,13 +16,7 @@ This lab covers the setup and initial ad-hoc administration of an Ansible contro
 ---
 
 ### 2) Install and Configure Ansible on Control Node (`ansible-master`)
-Connect to the control node via SSH:
-
-```bash
-ssh -i ~/.ssh/k3s.pem ubuntu@13.37.227.35
-```
-
-Install `pipx` and install Ansible:
+Install `pipx` and install Ansible on the control node:
 
 ```bash
 sudo apt update && sudo apt install -y pipx
