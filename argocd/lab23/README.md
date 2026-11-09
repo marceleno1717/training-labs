@@ -155,7 +155,7 @@ def call(String imageName, String newTag, String deploymentFile, String githubCr
 ---
 
 ### 6) Jenkins Pipeline Implementation (`Jenkinsfile3`)
-Located at [`jenkins/lab23/iVolveApp/Jenkinsfile3`](file:///home/marceleno/ivolve-labs/jenkins/lab23/iVolveApp/Jenkinsfile3):
+Located at [`argocd/lab23/iVolveApp/Jenkinsfile3`](file:///home/marceleno/ivolve-labs/argocd/lab23/iVolveApp/Jenkinsfile3):
 
 ```groovy
 @Library('shared-lib') _

@@ -8,8 +8,8 @@
 	path = jenkins/lab22/iVolveApp
 	url = https://github.com/marceleno1717/ivolveapp.git
 [submodule "jenkins/lab23/iVolveApp"]
-	path = jenkins/lab23/iVolveApp
+	path = argocd/lab23/iVolveApp
 	url = https://github.com/marceleno1717/ivolveapp.git
 [submodule "jenkins/lab23/shared-lib"]
-	path = jenkins/lab23/shared-lib
+	path = argocd/lab23/shared-lib
 	url = https://github.com/marceleno1717/jenkins-shared-lib.git
