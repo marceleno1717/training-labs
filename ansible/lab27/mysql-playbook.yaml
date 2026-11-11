@@ -1,0 +1,7 @@
+- name: configure MySQL DB
+  hosts: slaves
+  become: true
+  vars_files:
+    - secrets.yaml
+  roles:
+    - mysql

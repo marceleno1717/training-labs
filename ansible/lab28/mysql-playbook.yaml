@@ -1,0 +1,7 @@
+- name: configure MySQL DB
+  hosts: aws_ec2
+  become: true
+  vars_files:
+    - secrets.yaml
+  roles:
+    - mysql
